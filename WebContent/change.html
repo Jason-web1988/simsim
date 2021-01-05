@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>TEST</title>
+<script src="./javascript/jquery-3.5.1.min.js"></script>
+<script type="text/javascript">
+var sCont = "";
+var count = 0;
+
+function add(){
+	localStorage.clear();
+	
+	if(document.getElementById("name").value == 0) {
+		alert("이름을 선택해주세요");
+		document.getElementById("name").focus();
+		return false;
+	}
+	if($("input:checkbox[name=nation]").is(":checked") == false) {
+        alert('지역을 선택해주세요');
+		document.getElementById("nation").focus();
+		console.log(nation);
+		return false;
+	}
+	if(document.getElementById("job").value == "") {
+		alert("직업을 선택해주세요");
+		document.getElementById("job").focus();
+		return false;
+	}
+	
+	alert("이름은 [" + $('#name').val() + "]" + ", 성별은 [" + $('input[name="gender"]:checked').val() + "] 입니다."  );
+	
+	var nations = document.getElementsByName("nation"); 
+	
+	alert("지역의 문자열 길이는  >> [" + nations.length + "] 입니다.");
+	
+	for(var i=0; i<nations.length; i++){
+		if(nations[i].checked){
+			alert("선택된 지역은 [" + nations[i].value + "]- 입니다.");
+			console.log(nations[i].value);
+		}
+	}
+	alert("직업은 [" + $('#job').val() + "], " + "버튼의 이름은 [" + $('#name').val() + "] 입니다.");
+	
+	count++;
+	
+	sCont = "<input type=";
+	sCont += "'button'";   
+	sCont += "id=" + "info"  + [count];
+	sCont += " name=" + "info" + [count];
+	sCont += " value=" + '"' + $('#name').val()+ '"' + ">";
+	
+	$('#item').append(sCont);
+
+	 
+	console.log("name >>" + $('#name').val());
+	console.log("Button >> " + " Button"+[count]);
+	
+	var dataName ="";
+	localStorage.setItem("name"+[count],  $('#name').val());
+	dataName = localStorage.getItem("name"+[count]);
+	
+	var dataGender = "";
+	localStorage.setItem("gender"+[count],   $('input[name="gender"]:checked').val());
+	dataGender = localStorage.getItem("gender"+[count]);
+		 
+	var dataJob = "";
+	localStorage.setItem("job"+[count],  $('#job').val());
+	dataJob = localStorage.getItem("job"+[count]);
+	
+	var arrNations = [];
+    var check_count = document.getElementsByName("nation").length;
+    for (var i=0; i<check_count; i++) {
+    	if (document.getElementsByName("nation")[i].checked == true) {
+    		arrNations.push(document.getElementsByName("nation")[i].value);
+       }
+    }
+	
+	console.log("check_count >> " + check_count);
+	
+	console.log("dataName >> " + dataName);
+	console.log("dataGender >> " + dataGender);
+	console.log("dataJob >> " + dataJob);
+	
+ 	
+	$('#info'+[count]).on("click", function(){
+		for(var i=0; i<nations.length; i++) {
+			document.getElementsByName("nation")[i].checked=false;  
+		}
+	      
+		alert("Button click");
+
+		$('#name').val(dataName);
+		$('#job').val(dataJob);
+		
+		
+		
+		if(dataGender.includes("남자")){
+			$("input:radio[name='gender']:radio[value='남자']").prop('checked', true); 
+		}else{
+			$("input:radio[name='gender']:radio[value='여자']").prop('checked', true); 
+		}
+		
+		
+		if(arrNations.includes("시드니")){
+			$("input:checkbox[id='nation']:checkbox[value='시드니']").prop('checked', true);
+		} 
+		if(arrNations.includes("멜버른")){
+			$("input:checkbox[id='nation']:checkbox[value='멜버른']").prop('checked', true);
+		} 
+		if(arrNations.includes("캔버라")){
+			$("input:checkbox[id='nation']:checkbox[value='캔버라']").prop('checked', true);
+		} 
+		if(arrNations.includes("퍼스")){
+			$("input:checkbox[id='nation']:checkbox[value='퍼스']").prop('checked', true);
+		} 
+		if(arrNations.includes("애들레이드")){
+			$("input:checkbox[id='nation']:checkbox[value='애들레이드']").prop('checked', true);
+		} 
+		if(arrNations.includes("다윈")){
+			$("input:checkbox[id='nation']:checkbox[value='다윈']").prop('checked', true);
+		} 
+		if(arrNations.includes("타즈메니아")){
+			$("input:checkbox[id='nation']:checkbox[value='타즈메니아']").prop('checked', true);
+		} 
+		if(arrNations.includes("울룰루")){
+			$("input:checkbox[id='nation']:checkbox[value='울룰루']").prop('checked', true);
+		} 
+		if(arrNations.includes("크리스마스섬")){
+			$("input:checkbox[id='nation']:checkbox[value='크리스마스섬']").prop('checked', true);
+		} 
+		if(arrNations.includes("테스트섬")){
+			$("input:checkbox[id='nation']:checkbox[value='테스트섬']").prop('checked', true);
+		} 
+			
+		console.log("-------------------------" );
+		console.log("dataName >> " + dataName);
+		console.log("dataGender >> " + dataGender);
+		console.log("arrNations >> " + arrNations);
+		console.log("dataJob >> " + dataJob);
+	}); 
+};
+
+
+
+</script>
+</head>
+<body>
+<form action = "" method="post" id="insert">
+<table>
+	<thead>
+	<tr>
+		<th>이름</th>
+		<td><input type="text" id='name' name="name"></td>
+	</tr>
+	<tr>	
+		<th>성별</th>
+		<td><input type="radio" id="gender" name="gender" value="남자" checked="checked">남
+			<input type="radio" id="gender" name="gender" value="여자" >여<br>
+		</td>
+	</tr>
+	<tr>
+		<th>지역</th>
+		<td>
+			<input type="checkbox" id="nation" name="nation" value="시드니">시드니
+			<input type="checkbox" id="nation" name="nation" value="멜버른">멜버른
+			<input type="checkbox" id="nation" name="nation" value="캔버라">캔버라
+			<input type="checkbox" id="nation" name="nation" value="퍼스">퍼스 <br>
+			<input type="checkbox" id="nation" name="nation" value="들레이드">애들레이드
+			<input type="checkbox" id="nation" name="nation" value="다윈">다윈
+			<input type="checkbox" id="nation" name="nation" value="타즈메니아">타즈메니아
+			<input type="checkbox" id="nation" name="nation" value="울룰루">울룰루<br>
+			<input type="checkbox" id="nation" name="nation" value="크리스마스섬">크리스마스섬
+			<input type="checkbox" id="nation" name="nation" value="테스트섬">테스트섬
+		</td>
+	</tr>
+	
+	<tr>
+		<th>job</th>
+		<td>
+			<select id="job" name="job">
+				<option value="" selected="selected">--선택--</option>
+				<option value="자영업">자영업</option>
+				<option value="학생">학생</option>
+				<option value="회사원">회사원</option>
+				<option value="무직">무직</option>
+			</select>
+		</td>
+	</tr>
+	</thead>
+	<tbody id="item">
+		<tr>
+			<td>
+				<input type="button" id="input" onclick='add();' value="입력">
+			</td>
+		</tr>
+	</tbody>
+</table>
+</form>
+<br>
+	<div class="item"></div>
+</body>
+</html>
